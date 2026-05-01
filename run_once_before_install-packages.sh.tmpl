@@ -5,17 +5,16 @@
 set -euo pipefail
 
 # ---------------------------------------------------------------------------
-# Base packages
+# Base packages (Debian/Ubuntu only)
 # ---------------------------------------------------------------------------
-PACKAGES="zsh git curl ca-certificates"
-MISSING=""
-for pkg in $PACKAGES; do
-    dpkg -s "$pkg" &>/dev/null || MISSING="$MISSING $pkg"
+PACKAGES=(zsh git curl ca-certificates)
+MISSING=()
+for pkg in "${PACKAGES[@]}"; do
+    dpkg -s "$pkg" &>/dev/null || MISSING+=("$pkg")
 done
-if [ -n "$MISSING" ]; then
+if [ "${#MISSING[@]}" -gt 0 ]; then
     sudo apt-get update -qq
-    # shellcheck disable=SC2086
-    sudo apt-get install -y $MISSING
+    sudo apt-get install -y "${MISSING[@]}"
 fi
 
 # ---------------------------------------------------------------------------
@@ -30,7 +29,7 @@ fi
 # Default shell → zsh
 # ---------------------------------------------------------------------------
 ZSH_PATH="$(command -v zsh)"
-if [ "$SHELL" != "$ZSH_PATH" ]; then
-    sudo chsh -s "$ZSH_PATH" "$USER"
+if [ "$(getent passwd "$USER" | cut -d: -f7)" != "$ZSH_PATH" ]; then
+    sudo chsh -s "$ZSH_PATH" "$USER" || echo "chsh failed — ensure $ZSH_PATH is listed in /etc/shells"
 fi
 {{ end -}}
