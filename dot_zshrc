@@ -7,3 +7,14 @@ plugins=(git docker kubectl)
 source "$ZSH/oh-my-zsh.sh"
 
 alias dots='curl -fsLS dot.bwozniak.com | sh'
+
+alias dcupb='docker compose up --build'
+alias dcd='docker compose down'
+alias dcdvr='docker compose down -v --remove-orphans'
+alias dck='docker compose kill'
+alias dsp='docker system prune -a -f'
+
+alias k='kubectl'
+alias kgp='kubectl get pods'
+alias kga='kubectl get all'
+alias kgaa='kubectl get all -A'
