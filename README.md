@@ -67,6 +67,14 @@ You will be prompted for your **full name** and **email address** (used in `.git
 | `kga` | `kubectl get all` | List all resources |
 | `kgaa` | `kubectl get all -A` | List all resources across namespaces |
 
+## Start fresh
+
+To remove chezmoi state and all managed dotfiles:
+
+```sh
+chezmoi purge --force
+```
+
 ## After bootstrap
 
 Open a **new shell session** (or `exec zsh`) for the `chsh` change to take effect.
