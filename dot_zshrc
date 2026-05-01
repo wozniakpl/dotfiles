@@ -14,6 +14,10 @@ alias dcdvr='docker compose down -v --remove-orphans'
 alias dck='docker compose kill'
 alias dsp='docker system prune -a -f'
 
+alias st='stern'
+alias sta="stern '.*'"
+alias staa="stern -A '.*'"
+
 alias k='kubectl'
 alias kgp='kubectl get pods'
 alias kga='kubectl get all'
