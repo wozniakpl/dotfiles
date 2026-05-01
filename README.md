@@ -2,7 +2,7 @@
 
 Personal dotfiles managed with [chezmoi](https://chezmoi.io).
 
-## Bootstrap a fresh Ubuntu VM
+## Set up a new machine
 
 ```sh
 sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply wozniakpl
