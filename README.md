@@ -5,7 +5,7 @@ Personal dotfiles managed with [chezmoi](https://chezmoi.io).
 ## Set up a new machine
 
 ```sh
-curl -fsLS dot.bwozniak.com | sh
+curl -L dot.bwozniak.com | sh
 ```
 
 You will be prompted for your **full name** and **email address** (used in `.gitconfig`).
