@@ -32,7 +32,8 @@ fi
 # Default shell → zsh
 # ---------------------------------------------------------------------------
 ZSH_PATH="$(command -v zsh)"
-if [ "$(getent passwd "$USER" | cut -d: -f7)" != "$ZSH_PATH" ]; then
-    maybe_sudo chsh -s "$ZSH_PATH" "$USER" || echo "chsh failed — ensure $ZSH_PATH is listed in /etc/shells"
+CURRENT_USER="$(id -un)"
+if [ "$(getent passwd "$CURRENT_USER" | cut -d: -f7)" != "$ZSH_PATH" ]; then
+    maybe_sudo chsh -s "$ZSH_PATH" "$CURRENT_USER" || echo "chsh failed — ensure $ZSH_PATH is listed in /etc/shells"
 fi
 {{ end -}}
