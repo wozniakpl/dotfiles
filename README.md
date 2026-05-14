@@ -8,7 +8,7 @@ Personal dotfiles managed with [chezmoi](https://chezmoi.io).
 curl -L dot.bwozniak.com | sh
 ```
 
-You will be prompted for your **full name** and **email address** (used in `.gitconfig`).
+If `git` is available and already configured, your name and email are read from `git config` automatically — no prompt. Otherwise you will be asked; defaults to `Bartosz Woźniak` / `17177420+wozniakpl@users.noreply.github.com` if you just press Enter.
 
 ## What gets installed
 

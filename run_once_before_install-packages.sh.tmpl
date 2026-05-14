@@ -1,8 +1,8 @@
-#!/usr/bin/env bash
+#!/bin/sh
 # chezmoi run_once script — installs zsh, git, oh-my-zsh; sets default shell
 # Re-running is safe: every step is guarded by a presence check.
 {{ if eq .chezmoi.os "linux" -}}
-set -euo pipefail
+set -eu
 
 # Run as root directly, otherwise use sudo
 maybe_sudo() { [ "$(id -u)" -eq 0 ] && "$@" || sudo "$@"; }
@@ -10,14 +10,16 @@ maybe_sudo() { [ "$(id -u)" -eq 0 ] && "$@" || sudo "$@"; }
 # ---------------------------------------------------------------------------
 # Base packages (Debian/Ubuntu only)
 # ---------------------------------------------------------------------------
-PACKAGES=(zsh git curl ca-certificates)
-MISSING=()
-for pkg in "${PACKAGES[@]}"; do
-    dpkg -s "$pkg" &>/dev/null || MISSING+=("$pkg")
+PACKAGES="zsh git curl ca-certificates"
+MISSING=""
+for pkg in $PACKAGES; do
+    dpkg -s "$pkg" >/dev/null 2>&1 || MISSING="$MISSING $pkg"
 done
-if [ "${#MISSING[@]}" -gt 0 ]; then
+MISSING="${MISSING# }"
+if [ -n "$MISSING" ]; then
     maybe_sudo apt-get update -qq
-    maybe_sudo apt-get install -y "${MISSING[@]}"
+    # shellcheck disable=SC2086
+    maybe_sudo apt-get install -y $MISSING
 fi
 
 # ---------------------------------------------------------------------------
