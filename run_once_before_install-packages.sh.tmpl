@@ -8,18 +8,30 @@ set -eu
 maybe_sudo() { [ "$(id -u)" -eq 0 ] && "$@" || sudo "$@"; }
 
 # ---------------------------------------------------------------------------
-# Base packages (Debian/Ubuntu only)
+# Base packages (Debian/Ubuntu and Alpine)
 # ---------------------------------------------------------------------------
 PACKAGES="zsh git curl ca-certificates"
 MISSING=""
-for pkg in $PACKAGES; do
-    dpkg -s "$pkg" >/dev/null 2>&1 || MISSING="$MISSING $pkg"
-done
-MISSING="${MISSING# }"
-if [ -n "$MISSING" ]; then
-    maybe_sudo apt-get update -qq
-    # shellcheck disable=SC2086
-    maybe_sudo apt-get install -y $MISSING
+
+if [ -f /etc/alpine-release ]; then
+    for pkg in $PACKAGES; do
+        apk info -e "$pkg" >/dev/null 2>&1 || MISSING="$MISSING $pkg"
+    done
+    MISSING="${MISSING# }"
+    if [ -n "$MISSING" ]; then
+        # shellcheck disable=SC2086
+        maybe_sudo apk add --no-cache $MISSING
+    fi
+elif command -v apt-get >/dev/null 2>&1; then
+    for pkg in $PACKAGES; do
+        dpkg -s "$pkg" >/dev/null 2>&1 || MISSING="$MISSING $pkg"
+    done
+    MISSING="${MISSING# }"
+    if [ -n "$MISSING" ]; then
+        maybe_sudo apt-get update -qq
+        # shellcheck disable=SC2086
+        maybe_sudo apt-get install -y $MISSING
+    fi
 fi
 
 # ---------------------------------------------------------------------------
