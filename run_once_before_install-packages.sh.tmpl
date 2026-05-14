@@ -4,6 +4,9 @@
 {{ if eq .chezmoi.os "linux" -}}
 set -euo pipefail
 
+# Run as root directly, otherwise use sudo
+maybe_sudo() { [ "$(id -u)" -eq 0 ] && "$@" || sudo "$@"; }
+
 # ---------------------------------------------------------------------------
 # Base packages (Debian/Ubuntu only)
 # ---------------------------------------------------------------------------
@@ -13,8 +16,8 @@ for pkg in "${PACKAGES[@]}"; do
     dpkg -s "$pkg" &>/dev/null || MISSING+=("$pkg")
 done
 if [ "${#MISSING[@]}" -gt 0 ]; then
-    sudo apt-get update -qq
-    sudo apt-get install -y "${MISSING[@]}"
+    maybe_sudo apt-get update -qq
+    maybe_sudo apt-get install -y "${MISSING[@]}"
 fi
 
 # ---------------------------------------------------------------------------
@@ -30,6 +33,6 @@ fi
 # ---------------------------------------------------------------------------
 ZSH_PATH="$(command -v zsh)"
 if [ "$(getent passwd "$USER" | cut -d: -f7)" != "$ZSH_PATH" ]; then
-    sudo chsh -s "$ZSH_PATH" "$USER" || echo "chsh failed — ensure $ZSH_PATH is listed in /etc/shells"
+    maybe_sudo chsh -s "$ZSH_PATH" "$USER" || echo "chsh failed — ensure $ZSH_PATH is listed in /etc/shells"
 fi
 {{ end -}}
