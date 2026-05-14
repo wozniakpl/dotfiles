@@ -10,6 +10,8 @@ source "$ZSH/oh-my-zsh.sh"
 
 alias dots='curl -fsLS dot.bwozniak.com | sh'
 
+alias ll='ls -lah'
+
 alias dcupb='docker compose up --build'
 alias dcd='docker compose down'
 alias dcdvr='docker compose down -v --remove-orphans'
@@ -24,3 +26,5 @@ alias k='kubectl'
 alias kgp='kubectl get pods'
 alias kga='kubectl get all'
 alias kgaa='kubectl get all -A'
+
+[ -f "$HOME/.zshrc.local" ] && source "$HOME/.zshrc.local"
