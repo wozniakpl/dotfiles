@@ -11,6 +11,7 @@ source "$ZSH/oh-my-zsh.sh"
 alias dots='curl -fsLS dot.bwozniak.com | sh'
 
 alias ll='ls -lah'
+alias ew='watch -d'
 
 alias dcupb='docker compose up --build'
 alias dcd='docker compose down'
@@ -26,5 +27,7 @@ alias k='kubectl'
 alias kgp='kubectl get pods'
 alias kga='kubectl get all'
 alias kgaa='kubectl get all -A'
+
+function gagcm() { gaa; function _gagcm_commit() { git commit -m "$*"; }; _gagcm_commit "$@"; }
 
 [ -f "$HOME/.zshrc.local" ] && source "$HOME/.zshrc.local"
