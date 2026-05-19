@@ -28,6 +28,7 @@ alias k='kubectl'
 alias kgp='kubectl get pods'
 alias kga='kubectl get all'
 alias kgaa='kubectl get all -A'
+alias kt='kubectl top'
 
 function gagcm() { gaa; function _gagcm_commit() { git commit -m "$*"; }; _gagcm_commit "$@"; }
 
