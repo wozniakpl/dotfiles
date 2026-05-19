@@ -10,6 +10,7 @@ source "$ZSH/oh-my-zsh.sh"
 
 alias dots='curl -fsLS dot.bwozniak.com | sh'
 
+alias r='printf "\033c" &&'
 alias ll='ls -lah'
 alias ew='watch -d'
 
