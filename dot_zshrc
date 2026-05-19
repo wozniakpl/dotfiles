@@ -18,6 +18,7 @@ alias dcd='docker compose down'
 alias dcdvr='docker compose down -v --remove-orphans'
 alias dck='docker compose kill'
 alias dsp='docker system prune -a -f'
+alias dclf='docker compose logs -f'
 
 alias st='stern'
 alias sta="stern '.*'"
