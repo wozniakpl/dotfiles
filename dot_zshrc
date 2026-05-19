@@ -25,6 +25,7 @@ alias sta="stern '.*'"
 alias staa="stern -A '.*'"
 
 alias k='kubectl'
+alias kg='kubectl get'
 alias kgp='kubectl get pods'
 alias kga='kubectl get all'
 alias kgaa='kubectl get all -A'
