@@ -61,6 +61,27 @@ If `git` is available and already configured, your name and email are read from 
 | `kga` | `kubectl get all` | List all resources |
 | `kgaa` | `kubectl get all -A` | List all resources across namespaces |
 
+## Per-machine git config (signing, etc.)
+
+`~/.gitconfig` includes `~/.gitconfig.local` if it exists. Put per-machine settings there — chezmoi does not manage that file, so `dots` stays idempotent.
+
+Example for GPG commit signing:
+
+```ini
+# ~/.gitconfig.local
+[user]
+	signingkey = YOUR_KEY_ID
+
+[commit]
+	gpgsign = true
+
+[tag]
+	gpgsign = true
+
+[gpg]
+	program = /usr/local/bin/gpg   # or /opt/homebrew/bin/gpg on Apple Silicon
+```
+
 ## Start fresh
 
 To remove chezmoi state and all managed dotfiles:
