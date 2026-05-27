@@ -46,4 +46,8 @@ ew() {
   eval "watch -d \"$cmd\""
 }
 
+{{ if eq .osid "darwin" -}}
+audio() { osascript -e "set volume output volume $1"; }
+{{ end -}}
+
 [ -f "$HOME/.zshrc.local" ] && source "$HOME/.zshrc.local"
